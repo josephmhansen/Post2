@@ -40,4 +40,17 @@ struct Post {
         self.identifier = identifier
         
     }
+    
+    var jsonValue: [String: AnyObject]{
+        return [kUsername: username, kTimestamp: timestamp, kText : text]
+    }
+    var queryTimestamp: NSTimeInterval {
+        return timestamp - 0.000001
+    }
+    var jsonData: NSData? {
+        return try? NSJSONSerialization.dataWithJSONObject(jsonValue, options: .PrettyPrinted)
+    }
+    var endpoint: NSURL? {
+        return PostController.baseURL?.URLByAppendingPathComponent(self.identifier.UUIDString).URLByAppendingPathExtension("json")
+    }
 }
