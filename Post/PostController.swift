@@ -10,12 +10,27 @@ import Foundation
 
 class PostController {
     
-    static let baseURL = NSURL(string: "https://devmtn-post.firebaseio.com/posts")
+     static let sharedController = PostController()
+    
+     let baseURL = NSURL(string: "https://devmtn-post.firebaseio.com/posts")
+     weak var delegate: PostControllerDelegate?
     
     
-    static var posts: [Post] = []
+     var posts: [Post] = [] {
+        didSet {
+            delegate?.postsUpdated(posts)
+        }
+    }
     
-    static func fetchPosts(completion: (posts: [Post]?) -> Void) {
+    
+    init() {
+        fetchPosts { (posts) in
+            guard let posts = posts else { return }
+            self.posts = posts
+        }
+    }
+    
+     func fetchPosts(completion: (posts: [Post]?) -> Void) {
         guard let url = baseURL?.URLByAppendingPathExtension("json") else {
             print("Error No URL Found")
             completion(posts: [])
@@ -49,6 +64,9 @@ class PostController {
         
         
         
-    }
-    
 }
+
+protocol PostControllerDelegate: class {
+    func postsUpdated(posts: [Post])
+}
+
