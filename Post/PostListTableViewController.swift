@@ -23,6 +23,7 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
+    
     @IBAction func addButtonTapped(sender: AnyObject) {
         presentNewPostAlert()
     }

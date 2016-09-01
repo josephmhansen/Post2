@@ -47,10 +47,9 @@ class PostController {
                 print("Successfully saved data to endpoint")
                 success = true
             }
-          
         }
-        fetchPosts()
         
+        fetchPosts()
     }
     
     func fetchPosts(reset reset: Bool = true, completion: ((newPosts: [Post]) -> Void)? = nil) {
@@ -97,10 +96,10 @@ class PostController {
             for post in posts {
                 print(post.text)
                 print(post.queryTimestamp)
-            }
-            
+                
             }
         }
+    }
 }
 
 protocol PostControllerDelegate: class {
